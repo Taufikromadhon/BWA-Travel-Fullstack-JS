@@ -1,24 +1,26 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import propTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 
 export default function Button(props) {
   const className = [props.className];
 
-  if(props.isPrimary) className.push("btn-primary")
-  if(props.isLarge) className.push("btn-lg")
-  if(props.isSmall) className.push("btn-sm")
-  if(props.isBlock) className.push("btn-block")
-  if(props.hasShadow) className.push("btn-shadow")
+  if(props.isLarge) className.push("btn-lg");
+  if(props.isSmall) className.push("btn-sm");
+  if(props.isBlock) className.push("btn-block");
+  if(props.hasShadow) className.push("btn-shadow");
+  if(props.isPrimary) className.push("btn-primary");
 
-  const onclick = () => {
-    if(props.onclick) props.onClick()
-  }
+  const onClick = () => {
+    if(props.onclick){
+      props.onClick();
+    };
+  };
 
   if(props.isDisabled || props.isLoading){
     if(props.isDisabled){
-      className.push("disabled")
-    }
+      className.push("disabled");
+    };
     return (
       <span
         className={className.join(" ")}
@@ -26,14 +28,14 @@ export default function Button(props) {
       >
         { props.isLoading ? 
         <>
-        <span className='spinner-border spinner-border-sm mx-5'></span>
-        <span className='sr-only'>Loading ...</span>  
+          <span className='spinner-border spinner-border-sm mx-5'></span>
+          <span className='sr-only'>Loading ...</span>  
         </> : (
           props.children
         )}
       </span>
     );
-  }
+  };
 
   if(props.type === "link") {
     if(props.isExternal){
@@ -53,31 +55,30 @@ export default function Button(props) {
         <Link to={props.href}
           className={className.join(" ")}
           style={props.style}
-          onClick={props.onClick}
+          onClick={onClick}
         >
           {props.children}
         </Link>
-
-      )
-    }
-  }
+      );
+    };
+  };
 
   return (
     <div></div>
-  )
+  );
 };
 
 Button.prototypes = {
-  type: propTypes.oneOf(["button", "link"]),
-  onClick: propTypes.func,
   href: propTypes.string,
-  target: propTypes.string,
-  className: propTypes.string,
-  isDisabled: propTypes.bool,
-  isExternal: propTypes.bool,
-  isLoading: propTypes.bool,
+  onClick: propTypes.func,
   isSmall: propTypes.bool,
   isLarge: propTypes.bool,
   isBlock: propTypes.bool,
+  target: propTypes.string,
+  isLoading: propTypes.bool,
   hasShadow: propTypes.bool,
+  isDisabled: propTypes.bool,
+  isExternal: propTypes.bool,
+  className: propTypes.string,
+  type: propTypes.oneOf(["button", "link"]),
 }
